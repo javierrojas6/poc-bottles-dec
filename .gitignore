@@ -136,3 +136,4 @@ detectron2/
 runs/
 data/run
 data
+!src/**/data
