@@ -21,7 +21,7 @@ def load_data_frame(url, filter='**/*.jpg'):
         rows += [[img, url_parts[-3], 1 if url_parts[-2] == 'open' else 0]]
     
     df = pd.DataFrame(data=np.array(rows), columns=['file', 'category', 'state'])
-    df['state'] = df['state'].astype(np.int8)
+    df['state'] = df['state'].astype(np.compat.long)
     df['file'] = df['file'].astype(np.str_)
     df['category'] = df['category'].astype(np.str_)
 
