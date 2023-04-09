@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Define a custom dataset
+# This is a custom dataset class for loading image files and their corresponding labels with an
+# optional transformation.
 class CustomDataset(Dataset):
     def __init__(self, file_list, label_list, transform=None):
         self.file_list = file_list

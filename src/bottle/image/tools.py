@@ -5,9 +5,20 @@ from PIL import Image
 import torchvision.transforms as T
 import matplotlib.pyplot as plt
 
-COLORS = [[255,0,0],[0,255,0], [0,0,255]]
+COLORS = [[255, 0, 0], [0, 255, 0], [0, 0, 255]]
 
 def colored_mask(mask):
+  """
+  The function takes a binary mask and returns a colored mask by assigning random colors to the pixels
+  with value 1.
+  
+  :param mask: The input mask is a binary image where the object of interest is represented by white
+  pixels (pixel value of 1) and the background is represented by black pixels (pixel value of 0). The
+  function `colored_mask` takes this binary mask as input and returns a colored mask where the object
+  :return: The function `colored_mask` returns a numpy array of shape `(height, width, 3)` where each
+  pixel in the array is colored according to the input `mask`. The color of each pixel is randomly
+  chosen from a list of predefined colors `COLORS`.
+  """
   r = np.zeros_like(mask).astype(np.uint8)
   g = np.zeros_like(mask).astype(np.uint8)
   b = np.zeros_like(mask).astype(np.uint8)
@@ -16,6 +27,20 @@ def colored_mask(mask):
   return np.stack([r, g, b], axis = 2)
 
 def get_prediction(model, img_path, class_names, transforms = []):
+  """
+  This function takes in an image, a model, a list of class names, and optional transforms, and
+  returns the predicted masks, boxes, classes, and scores for objects in the image using the model.
+  
+  :param model: The object detection model used for making predictions on the input image
+  :param img_path: The file path of the image to be used for prediction
+  :param class_names: a list of names for the different classes that the model can predict
+  :param transforms: A list of image transformations to be applied to the input image before passing
+  it to the model for prediction. If no transformations are provided, a default transformation of
+  converting the image to a tensor is applied
+  :return: The function `get_prediction` returns four arrays: `masks`, `boxes`, `classes`, and
+  `scores`. These arrays contain the predicted segmentation masks, bounding boxes, class labels, and
+  confidence scores for the input image using the specified `model` and `class_names`.
+  """
   img = Image.open(img_path)
 
   if len(transforms) == 0:
@@ -32,6 +57,18 @@ def get_prediction(model, img_path, class_names, transforms = []):
   return masks, boxes, classes, scores
 
 def filter_prediction(prediction_data, threshold = .5, class_filter = []):
+  """
+  This function filters prediction data based on a threshold and optional class filter.
+  
+  :param prediction_data: a tuple containing the predicted masks, boxes, classes, and scores for an
+  object detection task
+  :param threshold: The minimum score threshold for a prediction to be considered valid. Any
+  predictions with a score below this threshold will be filtered out
+  :param class_filter: A list of classes to filter the predictions by. If this parameter is not empty,
+  only predictions with classes in this list will be returned
+  :return: The function `filter_prediction` returns the filtered masks, boxes, classes, and scores
+  based on the given threshold and class filter.
+  """
   masks, boxes, classes, scores = prediction_data
 
   condition = scores >= threshold
@@ -55,6 +92,28 @@ def plot_segments(img_path,
                   rect_thickness = 1,
                   text_size = 1,
                   text_thickness = 2):
+  """
+  The function plots segments on an image with optional bounding boxes, labels, and scores.
+  
+  :param img_path: The file path of the image to be plotted
+  :param pred_data: A tuple containing the predicted masks, bounding boxes, predicted classes, and
+  scores for each object in the image
+  :param draw_bounding_boxes: A boolean parameter that determines whether or not to draw bounding
+  boxes around the detected segments. If set to True, bounding boxes will be drawn. If set to False,
+  bounding boxes will not be drawn, defaults to True (optional)
+  :param draw_labels: A boolean parameter that determines whether or not to draw the predicted class
+  labels on the image, defaults to True (optional)
+  :param draw_score: A boolean parameter that determines whether or not to draw the score of the
+  predicted object on the image, defaults to True (optional)
+  :param score_fix: The number of decimal places to round the score to when displaying it on the
+  image, defaults to 2 (optional)
+  :param rect_thickness: The thickness of the bounding box rectangle to be drawn around the detected
+  object, defaults to 1 (optional)
+  :param text_size: The size of the text used for the labels, defaults to 1 (optional)
+  :param text_thickness: The thickness of the text in the plotted image, defaults to 2 (optional)
+  :return: an image with plotted segments, bounding boxes, labels, and scores based on the input image
+  path and predicted data.
+  """
   
   masks, boxes, pred_cls, scores = pred_data
   img = cv2.imread(img_path)

@@ -88,9 +88,7 @@ transform = T.Compose([
     T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
-
-
-# %%
+#%%
 import torch.nn as nn
 import torch.nn.functional as F
 

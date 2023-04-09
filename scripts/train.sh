@@ -1,0 +1,1 @@
+python train.py -m=bottle-cap -wd=1e-5 -lr=1e-5 -e=30 -n=bottle-cap data/dataset
