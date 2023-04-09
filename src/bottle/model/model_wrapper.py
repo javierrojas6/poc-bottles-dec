@@ -1,6 +1,9 @@
 
 import torch
 from datetime import datetime
+from PIL import Image
+import torchvision.transforms as T
+
 
 class ModelWrapper():
     model = None
@@ -31,7 +34,9 @@ class ModelWrapper():
         self.weight_decay = weight_decay
 
         criterion = torch.nn.CrossEntropyLoss()
-        optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay)
+        optimizer = torch.optim.Adam(self.model.parameters(),
+                                     lr=self.learning_rate,
+                                     weight_decay=self.weight_decay)
 
         return criterion, optimizer
 
@@ -56,12 +61,13 @@ class ModelWrapper():
         not be printed, defaults to False (optional)
         :return: a list of training loss data.
         """
-        criterion, optimizer = self._get_criterion_optimizer(lr=lr, weight_decay=weight_decay)
+        criterion, optimizer = self._get_criterion_optimizer(
+            lr=lr, weight_decay=weight_decay)
         train_loss_data = []
 
         if debug_mode:
             print('starting training, this will take a moment...')
-            
+
         for epoch in range(epochs):
             train_iterable = iter(train_dataset)
             # Load in the data in batches using the train_dataset object
@@ -116,9 +122,9 @@ class ModelWrapper():
                 images = images.to(device)
                 labels = labels.to(device)
                 outputs = self.model(images)
-                
+
                 _, predicted = torch.max(outputs.data, 1)
-                
+
                 all_true_labels += list(labels.numpy())
                 all_predicted_labels += list(predicted.numpy())
 
@@ -126,17 +132,45 @@ class ModelWrapper():
                 correct += (predicted == labels).sum().item()
 
             if debug_mode:
-                print('Accuracy of the network on the {} train images: {} %'.format(total, 100 * correct / total))
-                
+                print('Accuracy of the network on the {} train images: {} %'.format(
+                    total, 100 * correct / total))
+
         return all_true_labels, all_predicted_labels
 
-    def predict(self, x):
-        self.model.eval()
+    def predict(self, x, transforms = []):
+        """
+        This function takes an image file path, applies transforms (if provided), and returns the predicted
+        class label using a PyTorch model.
+        
+        :param x: The file path of the image to be predicted
+        :param transforms: `transforms` is a list of image transformations that can be applied to the input
+        image before it is passed through the model for prediction. If no transforms are provided, the
+        default transform applied is `T.ToTensor()`, which converts the image to a PyTorch tensor. Other
+        common transforms include resizing
+        :return: The function `predict` takes an image file path `x` and a list of image transforms
+        `transforms` as input, applies the transforms to the image, and returns a list of predicted class
+        labels for the image using a pre-trained PyTorch model. Specifically, it returns a list containing a
+        single element, which is the predicted class label for the input image.
+        """
+        img = Image.open(x)
+
+        if len(transforms) == 0: # no transforms
+            transforms = T.Compose([T.ToTensor()])
+
+        img = transforms(img)
+        img = img.unsqueeze(0)
+
+        with torch.no_grad():
+            output = self.model(img)
+            _, predicted = torch.max(output.data, 1)
+            output = list(predicted.numpy())
+
+        return output
 
     def measure_accuracy(self, classes, dataset):
         """
         This function measures the accuracy of a model's predictions for each class in a given dataset.
-        
+
         :param classes: A list of class names for the dataset. For example, if the dataset contains
         images of cats and dogs, the classes list would be ['cat', 'dog']
         :param dataset: The dataset parameter is a dataset object that contains the images and labels
@@ -167,22 +201,22 @@ class ModelWrapper():
         """
         This function saves the state dictionary of a PyTorch model to a file with a generated name based
         on the current date and time.
-        
+
         :param file_name: The name of the file to be saved. If no name is provided, the default name will
         be 'model', defaults to model (optional)
         """
         date_number = datetime.now().strftime('%Y%m%d%H%M%S')
         device = 'cpu'
         ext = 'pth'
-        
+
         generated_name = '.'.join([f'{file_name}-{date_number}', device, ext])
 
         torch.save(self.model.state_dict(), generated_name)
-        
+
     def load(self, path):
         """
         This function loads a saved state dictionary of a PyTorch model from a specified path.
-        
+
         :param path: The path parameter is a string that represents the file path where the model's
         state dictionary is saved. The load method loads the state dictionary from the specified file
         path and updates the model's parameters with the loaded values
