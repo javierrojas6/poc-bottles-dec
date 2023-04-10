@@ -1,0 +1,37 @@
+resnet34
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2002 entries, 0 to 2001
+Data columns (total 3 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   file      2002 non-null   object
+ 1   category  2002 non-null   object
+ 2   state     2002 non-null   int64 
+dtypes: int64(1), object(2)
+memory usage: 47.0+ KB
+
+starting training, this will take a moment...
+Epoch [1/20], Loss: 7.60069513
+Epoch [2/20], Loss: 5.89090395
+Epoch [3/20], Loss: 3.41722870
+Epoch [4/20], Loss: 1.55530226
+Epoch [5/20], Loss: 1.22276342
+Epoch [6/20], Loss: 0.54898351
+Epoch [7/20], Loss: 0.33879769
+Epoch [8/20], Loss: 0.28814214
+Epoch [9/20], Loss: 0.48308158
+Epoch [10/20], Loss: 0.33438167
+Epoch [11/20], Loss: 0.16391009
+Epoch [12/20], Loss: 0.13030764
+Epoch [13/20], Loss: 0.04708381
+Epoch [14/20], Loss: 0.05673062
+Epoch [15/20], Loss: 0.03603246
+Epoch [16/20], Loss: 0.02820922
+Epoch [17/20], Loss: 0.06620585
+Epoch [18/20], Loss: 0.03878842
+Epoch [19/20], Loss: 0.04006030
+Epoch [20/20], Loss: 0.02917016
+train_loss_data [7.6006951332092285, 5.890903949737549, 3.4172286987304688, 1.5553022623062134, 1.2227634191513062, 0.5489835143089294, 0.3387976884841919, 0.2881421446800232, 0.483081579208374, 0.33438166975975037, 0.16391009092330933, 0.1303076446056366, 0.04708380997180939, 0.056730616837739944, 0.03603246435523033, 0.02820921503007412, 0.06620585173368454, 0.03878841549158096, 0.04006030037999153, 0.029170162975788116]
+Accuracy of the network on the 601 train images: 82.19633943427621 %
+metrics {'confusion_matrix': array([[329,  57],
+       [ 50, 165]]), 'accuracy_score': 0.8219633943427621, 'auc': 0.8219633943427621, 'average_precision_score': 0.653590652913487, 'balanced_accuracy_score': 0.8098867333413664, 'f1_score': 0.8219633943427622, 'fbeta_score': 0.8219633943427621, 'matthews_corrcoef': 0.6155307724757808, 'precision_recall_curve': (array([0.3577371 , 0.74324324, 1.        ]), array([1.        , 0.76744186, 0.        ]), array([0, 1])), 'precision_score': 0.8219633943427621, 'recall_score': 0.8219633943427621, 'top_k_accuracy_score': 1.0}

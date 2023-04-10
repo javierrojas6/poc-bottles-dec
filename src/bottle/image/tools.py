@@ -88,6 +88,8 @@ def plot_segments(img_path,
                   draw_bounding_boxes = True,
                   draw_labels = True,
                   draw_score = True,
+                  draw_mask = True,
+                  mask_alpha = .5,
                   score_fix = 2,
                   rect_thickness = 1,
                   text_size = 1,
@@ -117,14 +119,14 @@ def plot_segments(img_path,
   
   masks, boxes, pred_cls, scores = pred_data
   img = cv2.imread(img_path)
-  img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
   if draw_score:
     format_string = "{:.Xf}".replace('X', str(score_fix))
 
   for i in range(len(masks)):
-    rgb_mask = colored_mask(masks[i])
-    img = cv2.addWeighted(img, 1, rgb_mask, .5, 0)
+    if draw_mask:
+      rgb_mask = colored_mask(masks[i])
+      img = cv2.addWeighted(img, 1, rgb_mask, mask_alpha, 0)
 
     if draw_bounding_boxes:
       cv2.rectangle(
@@ -152,3 +154,6 @@ def plot_segments(img_path,
       )
 
   return img
+
+def save_image(img, filename):
+  return cv2.imwrite(filename, img)

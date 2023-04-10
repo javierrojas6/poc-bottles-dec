@@ -4,7 +4,6 @@ from datetime import datetime
 from PIL import Image
 import torchvision.transforms as T
 
-
 class ModelWrapper():
     model = None
     learning_rate = 1e-3
@@ -134,7 +133,7 @@ class ModelWrapper():
 
         return all_true_labels, all_predicted_labels
 
-    def predict(self, x, transforms = []):
+    def predict(self, x, transforms = [], labels = []):
         """
         This function takes an image file path, applies transforms (if provided), and returns the predicted
         class label using a PyTorch model.
@@ -161,8 +160,10 @@ class ModelWrapper():
             output = self.model(img)
             _, predicted = torch.max(output.data, 1)
             output = list(predicted.numpy())
-
-        return output
+            
+        prediction = output[0]
+            
+        return prediction if len(labels) == 0 else labels[prediction]
 
     def measure_accuracy(self, classes, dataset):
         """

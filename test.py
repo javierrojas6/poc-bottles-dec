@@ -6,7 +6,6 @@ import torchvision.transforms as T
 import warnings
 
 from sklearn.model_selection import train_test_split
-import sklearn
 
 sys.path.append(os.path.join(os.getcwd(), 'src'))
 import bottle
@@ -49,7 +48,7 @@ y_train = np.array(y_train)
 y_test = np.array(y_test)
 
 transform = T.Compose([
-    T.Resize((100, 200)),
+    T.Resize((400, 800)),
     T.ToTensor(),
     T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ])

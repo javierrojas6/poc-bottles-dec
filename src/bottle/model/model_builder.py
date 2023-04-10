@@ -2,11 +2,16 @@ import torch
 import torchvision
 import sklearn
 
+BOTTLE_DETECTION_MODEL = ('resnet50', 'v0.15.1')
+# BOTTLE_CAP_STATE_DETECTION_MODEL = ('resnet34', 'v0.15.1', 'ResNet34_Weights.DEFAULT')
+BOTTLE_CAP_STATE_DETECTION_MODEL = ('resnet18', 'v0.10.0', 'ResNet18_Weights.DEFAULT')
+
+
 def build_bottle_detection_model(device):
     """
     This function builds and returns a pre-trained Mask R-CNN ResNet50 FPN model for bottle detection,
     which is then moved to the specified device.
-    
+
     :param device: The "device" parameter is used to specify whether the model should be trained and run
     on the CPU or GPU. It is a string that can take the values "cpu" or "cuda" depending on the hardware
     available
@@ -20,25 +25,29 @@ def build_bottle_detection_model(device):
 
 def build_bottle_cap_state_detection_model(device, pretrained=True):
     """
-    This function builds a bottle cap state detection model using a pre-trained ResNet18 model from
-    PyTorch's vision library.
+    This function builds and loads a pre-trained PyTorch model for detecting the state of bottle caps on
+    a specified device.
     
     :param device: The device parameter specifies the device on which the model will be loaded and run.
     It can be either "cpu" or "cuda" depending on whether you want to use the CPU or GPU for computation
-    :param pretrained: pretrained is a boolean parameter that specifies whether to load the pre-trained
-    weights for the ResNet18 model or not. If set to True, the pre-trained weights will be loaded, and
-    if set to False, the model will be initialized with random weights, defaults to True (optional)
-    :return: a ResNet18 model for detecting the state of bottle caps, which is loaded from the PyTorch
-    vision library. The model is also moved to the specified device (CPU or GPU) before being returned.
+    :param pretrained: A boolean value indicating whether to load the pre-trained weights for the model
+    or not. If set to True, the function will load the pre-trained weights for the model. If set to
+    False, the function will load the model without any pre-trained weights, defaults to True (optional)
+    :return: The function `build_bottle_cap_state_detection_model` returns a PyTorch model for detecting
+    the state of a bottle cap, loaded from a pre-trained model if `pretrained=True`. The model is loaded
+    onto the specified `device`.
     """
-    model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', weights=pretrained)
+    name, version, weights = BOTTLE_CAP_STATE_DETECTION_MODEL
+    if pretrained: model = torch.hub.load(f'pytorch/vision:{version}', name, weights=weights)
+    else: model = torch.hub.load(f'pytorch/vision:{version}', name)
     return model.to(device)
+
 
 def evaluate_classification(y_true, y_pred, labels=None):
     """
     The function `evaluate_classification` calculates various classification metrics for a given set of
     true and predicted labels.
-    
+
     :param y_true: The true labels of the classification problem
     :param y_pred: The predicted labels or classes for a classification problem
     :param labels: The list of labels to include in the report. If None, all labels are included
