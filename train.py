@@ -70,7 +70,7 @@ train_loss_data = model_wrapper.train(train_dataset=train_loader,
 
 print('train_loss_data', train_loss_data)
 
-model_wrapper.save(args.model)
+model_wrapper.save(args.model, device=device)
 
 y_true, y_pred = model_wrapper.evaluate(test_dataset=test_loader,
                        device=device,

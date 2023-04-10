@@ -194,7 +194,7 @@ class ModelWrapper():
             accuracy = 100 * float(correct_count) / total_pred[classname]
             print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
 
-    def save(self, file_name='model'):
+    def save(self, file_name='model', device='cpu', ext='pth'):
         """
         This function saves the state dictionary of a PyTorch model to a file with a generated name based
         on the current date and time.
@@ -203,8 +203,6 @@ class ModelWrapper():
         be 'model', defaults to model (optional)
         """
         date_number = datetime.now().strftime('%Y%m%d%H%M%S')
-        device = 'cpu'
-        ext = 'pth'
 
         generated_name = '.'.join([f'{file_name}-{date_number}', device, ext])
 
