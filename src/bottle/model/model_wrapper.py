@@ -133,23 +133,22 @@ class ModelWrapper():
 
         return all_true_labels, all_predicted_labels
 
-    def predict(self, x, transforms = [], labels = []):
+    def predict(self, img, transforms = [], labels = []):
         """
-        This function takes an image file path, applies transforms (if provided), and returns the predicted
-        class label using a PyTorch model.
+        This function takes an image and applies transforms to it before passing it through a pre-trained
+        model to make a prediction, which is returned as either the predicted class index or the
+        corresponding label.
         
-        :param x: The file path of the image to be predicted
-        :param transforms: `transforms` is a list of image transformations that can be applied to the input
-        image before it is passed through the model for prediction. If no transforms are provided, the
-        default transform applied is `T.ToTensor()`, which converts the image to a PyTorch tensor. Other
-        common transforms include resizing
-        :return: The function `predict` takes an image file path `x` and a list of image transforms
-        `transforms` as input, applies the transforms to the image, and returns a list of predicted class
-        labels for the image using a pre-trained PyTorch model. Specifically, it returns a list containing a
-        single element, which is the predicted class label for the input image.
+        :param img: The input image that we want to make a prediction on
+        :param transforms: A list of image transformations to be applied to the input image before making a
+        prediction. If no transforms are provided, the function applies a default transformation that
+        converts the image to a tensor
+        :param labels: The `labels` parameter is a list of labels corresponding to the predicted classes. If
+        provided, the `predict` method will return the label of the predicted class instead of the class
+        index. If `labels` is not provided, the method will return the class index
+        :return: the predicted label of an input image. If the `labels` argument is provided, it returns the
+        corresponding label string instead of the numerical label.
         """
-        img = Image.open(x)
-
         if len(transforms) == 0: # no transforms
             transforms = T.Compose([T.ToTensor()])
 
@@ -164,6 +163,24 @@ class ModelWrapper():
         prediction = output[0]
             
         return prediction if len(labels) == 0 else labels[prediction]
+
+    def predict_by_url(self, img_url, transforms = [], labels = []):
+        """
+        This function takes an image file path, applies transforms (if provided), and returns the predicted
+        class label using a PyTorch model.
+        
+        :param x: The file path of the image to be predicted
+        :param transforms: `transforms` is a list of image transformations that can be applied to the input
+        image before it is passed through the model for prediction. If no transforms are provided, the
+        default transform applied is `T.ToTensor()`, which converts the image to a PyTorch tensor. Other
+        common transforms include resizing
+        :return: The function `predict` takes an image file path `x` and a list of image transforms
+        `transforms` as input, applies the transforms to the image, and returns a list of predicted class
+        labels for the image using a pre-trained PyTorch model. Specifically, it returns a list containing a
+        single element, which is the predicted class label for the input image.
+        """
+        img = Image.open(img_url)
+        return self.predict(img, transforms, labels)
 
     def measure_accuracy(self, classes, dataset):
         """

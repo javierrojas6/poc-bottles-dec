@@ -157,3 +157,38 @@ def plot_segments(img_path,
 
 def save_image(img, filename):
   return cv2.imwrite(filename, img)
+
+def split_images_by_mask(img, masks, boxes):
+  """
+  This function takes an image, masks, and boxes as inputs, and returns a list of images that have
+  been split based on the masks and boxes.
+  
+  :param img: The path to the image file that needs to be split
+  :param masks: A list of binary masks where each mask corresponds to an object in the image
+  :param boxes: The "boxes" parameter is a list of bounding boxes, where each bounding box is
+  represented as a list of two points. The first point represents the top-left corner of the bounding
+  box, and the second point represents the bottom-right corner of the bounding box
+  :return: a list of images that have been split from the original image based on the provided masks
+  and boxes.
+  """
+  img = Image.open(img)
+  
+  imgs = []
+  for i in range(len(masks)):
+    copied_image = np.copy(img)
+    int_mask = masks[i].astype(int)
+    copied_image[int_mask == 0] = [0, 0, 0]
+    
+    start_x = int(boxes[i][0][0])
+    start_y = int(boxes[i][0][1])
+
+    end_x = int(boxes[i][1][0])
+    end_y = int(boxes[i][1][1])
+    
+    imgs += [copied_image[
+      start_y: start_y + end_y,
+      start_x: start_x + end_x
+      ]
+    ]
+    
+  return imgs
