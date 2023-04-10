@@ -137,3 +137,4 @@ runs/
 data/run
 data
 !src/**/data
+!pretrained/*.log

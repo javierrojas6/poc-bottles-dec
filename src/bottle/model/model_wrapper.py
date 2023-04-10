@@ -61,8 +61,7 @@ class ModelWrapper():
         not be printed, defaults to False (optional)
         :return: a list of training loss data.
         """
-        criterion, optimizer = self._get_criterion_optimizer(
-            lr=lr, weight_decay=weight_decay)
+        criterion, optimizer = self._get_criterion_optimizer(lr=lr, weight_decay=weight_decay)
         train_loss_data = []
 
         if debug_mode:
@@ -88,8 +87,7 @@ class ModelWrapper():
             train_loss_data += [loss.item()]
 
             if debug_mode:
-                print(
-                    'Epoch [{}/{}], Loss: {:.8f}'.format(epoch + 1, epochs, loss.item()))
+                print('Epoch [{}/{}], Loss: {:.8f}'.format(epoch + 1, epochs, loss.item()))
 
         return train_loss_data
 
@@ -125,15 +123,14 @@ class ModelWrapper():
 
                 _, predicted = torch.max(outputs.data, 1)
 
-                all_true_labels += list(labels.numpy())
-                all_predicted_labels += list(predicted.numpy())
+                all_true_labels += list(labels.to('cpu').numpy())
+                all_predicted_labels += list(predicted.to('cpu').numpy())
 
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
             if debug_mode:
-                print('Accuracy of the network on the {} train images: {} %'.format(
-                    total, 100 * correct / total))
+                print('Accuracy of the network on the {} train images: {} %'.format(total, 100 * correct / total))
 
         return all_true_labels, all_predicted_labels
 

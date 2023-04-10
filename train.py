@@ -51,7 +51,7 @@ y_train = np.array(y_train)
 y_test = np.array(y_test)
 
 transform = T.Compose([
-    T.Resize((100, 200)),
+    T.Resize((200, 400)),
     T.ToTensor(),
     T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ])

@@ -1,0 +1,20 @@
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2002 entries, 0 to 2001
+Data columns (total 3 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   file      2002 non-null   object
+ 1   category  2002 non-null   object
+ 2   state     2002 non-null   int64 
+dtypes: int64(1), object(2)
+memory usage: 47.0+ KB
+
+Accuracy of the network on the 601 train images: 90.68219633943427 %
+metrics {'confusion_matrix': array([[359,  22],
+       [ 22, 186]], dtype=int64), 'accuracy_score': 0.9068219633943427, 'auc': 0.9068219633943427, 'average_precision_score': 0.7992030598353393, 'balanced_accuracy_score': 0.9019364267446108, 'f1_score': 0.9159663865546219, 'fbeta_score': 0.9215421034832599, 'matthews_corrcoef': 0.8008533262535364, 'precision_recall_curve': (array([0.34941764, 0.85454545, 0.16666667, 0.18181818, 0.2       ,
+       0.11111111, 0.125     , 0.14285714, 0.16666667, 0.2       ,
+       0.25      , 0.33333333, 0.5       , 1.        , 1.        ]), array([1.        , 0.8952381 , 0.00952381, 0.00952381, 0.00952381,
+       0.0047619 , 0.0047619 , 0.0047619 , 0.0047619 , 0.0047619 ,
+       0.0047619 , 0.0047619 , 0.0047619 , 0.0047619 , 0.        ]), array([  0,   1, 447, 456, 468, 494, 506, 613, 664, 676, 770, 852, 907,
+       921], dtype=int64)), 'precision_score': 0.9252971137521222, 'recall_score': 0.9068219633943427, 'top_k_accuracy_score': 1.0}
