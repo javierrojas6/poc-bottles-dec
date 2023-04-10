@@ -1,0 +1,34 @@
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2002 entries, 0 to 2001
+Data columns (total 3 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   file      2002 non-null   object
+ 1   category  2002 non-null   object
+ 2   state     2002 non-null   int64 
+dtypes: int64(1), object(2)
+memory usage: 47.0+ KB
+
+starting training, this will take a moment...
+Epoch [1/10], Loss: 8.42190552
+Epoch [2/10], Loss: 6.89812422
+Epoch [3/10], Loss: 6.22085619
+Epoch [4/10], Loss: 6.33172417
+Epoch [5/10], Loss: 4.76673269
+Epoch [6/10], Loss: 2.26129580
+Epoch [7/10], Loss: 2.83383822
+Epoch [8/10], Loss: 1.89700496
+Epoch [9/10], Loss: 1.06552827
+Epoch [10/10], Loss: 0.84205228
+train_loss_data [8.421905517578125, 6.8981242179870605, 6.220856189727783, 6.331724166870117, 4.766732692718506, 2.261295795440674, 2.8338382244110107, 1.8970049619674683, 1.0655282735824585, 0.8420522809028625]
+Accuracy of the network on the 601 train images: 74.70881863560732 %
+metrics {'confusion_matrix': array([[309,  61],
+       [ 72, 140]]), 'accuracy_score': 0.7470881863560732, 'auc': 0.7470881863560732, 'average_precision_score': 0.5448887320715079, 'balanced_accuracy_score': 0.7258404627063502, 'f1_score': 0.7590870667793744, 'fbeta_score': 0.7664731990440424, 'matthews_corrcoef': 0.46604837093670226, 'precision_recall_curve': (array([0.3577371 , 0.65      , 0.15789474, 0.11111111, 0.05882353,
+       0.06666667, 0.07142857, 0.07692308, 0.09090909, 0.1       ,
+       0.11111111, 0.125     , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 1.        ]), array([1.        , 0.66511628, 0.01395349, 0.00930233, 0.00465116,
+       0.00465116, 0.00465116, 0.00465116, 0.00465116, 0.00465116,
+       0.00465116, 0.00465116, 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        ]), array([  0,   1,  82, 151, 354, 440, 447, 494, 505, 559, 606, 636, 653,
+       731, 748, 765, 827, 898])), 'precision_score': 0.7714776632302406, 'recall_score': 0.7470881863560732, 'top_k_accuracy_score': 1.0}
