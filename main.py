@@ -21,7 +21,7 @@ import bottle
 app = FastAPI()
 
 # sets parameters
-bottle_cap_model_file = './pretrained/bottle-cap-20230411101512.cpu.pth'
+bottle_cap_model_file = './pretrained/bottle-cap-20230410044128.cpu.pth'
 threshold = 0.7
 device = 'cpu'
 public_folder = 'public'
@@ -35,7 +35,7 @@ class BottleItem(BaseModel):
     box: List
     state: str
 
-class AnalysisRespose(BaseModel):
+class AnalysisResponse(BaseModel):
     bottles: list[BottleItem]
     image: str
 
@@ -114,6 +114,6 @@ async def analyze_picture(request: Request, file: UploadFile):
     host, port = request.scope['server']
     host_url = f'{protocol}://' + (':'.join([host, str(port)]) if port != 80 else host)
     image_public_url = '/'.join([host_url, public_folder, debug_filename])
-    response = AnalysisRespose(bottles=bottles, image=image_public_url)
+    response = AnalysisResponse(bottles=bottles, image=image_public_url)
     
     return JSONResponse(content=jsonable_encoder(response))

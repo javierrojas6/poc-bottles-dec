@@ -3,8 +3,8 @@ import torchvision
 import sklearn
 
 BOTTLE_DETECTION_MODEL = ('resnet50', 'v0.15.1')
-BOTTLE_CAP_STATE_DETECTION_MODEL = ('resnet34', 'v0.15.1', 'ResNet34_Weights.DEFAULT')
-# BOTTLE_CAP_STATE_DETECTION_MODEL = ('resnet18', 'v0.10.0', 'ResNet18_Weights.DEFAULT')
+# BOTTLE_CAP_STATE_DETECTION_MODEL = ('resnet34', 'v0.15.1', 'ResNet34_Weights.DEFAULT')
+BOTTLE_CAP_STATE_DETECTION_MODEL = ('resnet18', 'v0.10.0', 'ResNet18_Weights.DEFAULT')
 
 
 def build_bottle_detection_model(device):
