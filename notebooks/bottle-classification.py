@@ -7,6 +7,10 @@
 !pip install glob2
 !pip install pandas
 !pip install scikit-learn
+!pip install fastapi
+!pip install "uvicorn[standard]"
+!pip install python-multipart
+!pip install pipreqs
 
 # %%
 # Importing the necessary libraries
