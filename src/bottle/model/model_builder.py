@@ -19,7 +19,7 @@ def build_bottle_detection_model(device):
     generating segmentation masks. The model is being moved to the specified device (CPU or GPU) before
     returning.
     """
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
+    model = torchvision.models.detection.maskrcnn_resnet50_fpn_v2(pretrained=True)
     return model.to(device)
 
 

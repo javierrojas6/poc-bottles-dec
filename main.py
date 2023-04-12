@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, Request, UploadFile, status
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import re
@@ -50,7 +51,15 @@ bottle_cap_state_model_wrapper.load(bottle_cap_model_file)
 
 # app settings
 ## public folder
-app.mount(f"/{public_folder}", StaticFiles(directory=public_folder), name=public_folder)
+app.mount(f"/{public_folder}", StaticFiles(directory = './' + public_folder), name = public_folder)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
 
 @app.post("/analyze/picture")
 async def analyze_picture(request: Request, file: UploadFile):

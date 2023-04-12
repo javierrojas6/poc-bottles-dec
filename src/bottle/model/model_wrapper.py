@@ -150,7 +150,11 @@ class ModelWrapper():
         corresponding label string instead of the numerical label.
         """
         if len(transforms) == 0: # no transforms
-            transforms = T.Compose([T.ToTensor()])
+            transforms = T.Compose([
+                # T.Resize((400, 800)),
+                T.ToTensor(),
+                # T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ])
 
         img = transforms(img)
         img = img.unsqueeze(0)
