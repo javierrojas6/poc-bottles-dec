@@ -1,4 +1,5 @@
 
+from typing import Any, List
 from fastapi import FastAPI, HTTPException, Request, UploadFile, status
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
@@ -14,7 +15,6 @@ import shutil
 import uuid
 
 from PIL import Image
-from pyparsing import List
 
 sys.path.append(os.path.join(os.getcwd(), 'src'))
 import bottle
@@ -26,6 +26,7 @@ bottle_cap_model_file = './pretrained/bottle-cap-20230410044128.cpu.pth'
 threshold = 0.7
 device = 'cpu'
 public_folder = 'public'
+host = '34.201.134.90'
 
 warnings.filterwarnings('ignore')
 
@@ -37,7 +38,7 @@ class BottleItem(BaseModel):
     state: str
 
 class AnalysisResponse(BaseModel):
-    bottles: list[BottleItem]
+    bottles: Any
     image: str
 
 # loads AI models
@@ -67,7 +68,7 @@ async def analyze_picture(request: Request, file: UploadFile):
     if file.content_type == None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid image file")
 
-    is_image = re.search(r"image/(jpg|jpeg|png)", file.content_type, re.RegexFlag.IGNORECASE)
+    is_image = re.search(r"image/(jpg|jpeg)", file.content_type, re.RegexFlag.IGNORECASE)
     if is_image == None :
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid image file")
 
@@ -120,7 +121,7 @@ async def analyze_picture(request: Request, file: UploadFile):
 
     # build public url for debug image
     protocol = request.scope['type']
-    host, port = request.scope['server']
+    _, port = request.scope['server']
     host_url = f'{protocol}://' + (':'.join([host, str(port)]) if port != 80 else host)
     image_public_url = '/'.join([host_url, public_folder, debug_filename])
     response = AnalysisResponse(bottles=bottles, image=image_public_url)
