@@ -26,6 +26,8 @@ if not os.path.exists(args.bottle_cap_model_file_name):
     print(f'model not exist {args.bottle_cap_model_file_name}')
     exit()
     
+max_image_size = 1200
+    
 filename, file_extension = os.path.splitext(args.image)
 
 warnings.filterwarnings('ignore')
@@ -34,6 +36,8 @@ device = bottle.utils.get_device()
 
 bottle_detection_model = bottle.model.build_bottle_detection_model(device)
 bottle_cap_state_model = bottle.model.build_bottle_cap_state_detection_model(device, False)
+
+bottle.image.transform_resize_to_max_size(args.image, max_image_size)
 
 # switch to evaluation mode
 bottle_detection_model.eval()

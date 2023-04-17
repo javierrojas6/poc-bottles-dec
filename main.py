@@ -26,7 +26,8 @@ bottle_cap_model_file = './pretrained/bottle-cap-20230410044128.cpu.pth'
 threshold = 0.7
 device = 'cpu'
 public_folder = 'public'
-host = '34.201.134.90'
+host = 'bottlenet-poc.cod3onestudios.com'
+max_image_size = 1200
 
 warnings.filterwarnings('ignore')
 
@@ -79,6 +80,8 @@ async def analyze_picture(request: Request, file: UploadFile):
 
     with open(store_filepath, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
+        
+    bottle.image.transform_resize_to_max_size(store_filepath, max_image_size)
 
     # let's analyze the file
     pred = bottle.image.get_prediction(bottle_detection_model, img_path=store_filepath, class_names=bottle.model.COCO_CLASS_NAMES)

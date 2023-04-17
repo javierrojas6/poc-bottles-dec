@@ -192,3 +192,25 @@ def split_images_by_mask(img, masks, boxes):
     ]
     
   return imgs
+
+def transform_resize_to_max_size(img_path, max):
+    img = Image.open(img_path)
+    img_shape =  np.array(img).shape
+    image_max = np.max(img_shape)
+    
+    if image_max <= max: # nothing to do
+        return
+      
+    w, h, _ = img_shape
+    cr =  max / image_max
+    
+    w, h = int(w * cr), int(h * cr)
+    transform_resize = T.Compose([
+        T.ToTensor(),
+        T.Resize((w, h)),
+        T.ToPILImage()
+    ])
+    
+    # get normalized image
+    img_normalized = transform_resize(img)
+    img_normalized.save(img_path)
