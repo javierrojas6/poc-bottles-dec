@@ -4,7 +4,7 @@ After = network.target # Assuming you want to start after network interfaces are
  
 [Service]
 Type = simple
-ExecStart = python --host 0.0.0.0 --port 3000 --reload
+ExecStart = uvicorn main:app --host 0.0.0.0 --port 3000 --reload
 User = ec2-user # User to run the script as
 Group = ec2-user # Group to run the script as
 Restart = on-failure # Restart when there are errors
