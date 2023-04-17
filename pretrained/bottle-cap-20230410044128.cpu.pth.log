@@ -1,0 +1,39 @@
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2002 entries, 0 to 2001
+Data columns (total 3 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   file      2002 non-null   object
+ 1   category  2002 non-null   object
+ 2   state     2002 non-null   int64 
+dtypes: int64(1), object(2)
+memory usage: 47.0+ KB
+
+starting training, this will take a moment...
+Epoch [1/20], Loss: 7.62925434
+Epoch [2/20], Loss: 6.63232803
+Epoch [3/20], Loss: 4.82118368
+Epoch [4/20], Loss: 3.25068307
+Epoch [5/20], Loss: 2.36279202
+Epoch [6/20], Loss: 1.98674953
+Epoch [7/20], Loss: 1.25213504
+Epoch [8/20], Loss: 2.09101963
+Epoch [9/20], Loss: 0.83407521
+Epoch [10/20], Loss: 0.40092513
+Epoch [11/20], Loss: 0.88670737
+Epoch [12/20], Loss: 0.43065444
+Epoch [13/20], Loss: 0.45886254
+Epoch [14/20], Loss: 0.19940220
+Epoch [15/20], Loss: 0.18718889
+Epoch [16/20], Loss: 0.90762198
+Epoch [17/20], Loss: 0.22453180
+Epoch [18/20], Loss: 0.07043186
+Epoch [19/20], Loss: 0.17072700
+Epoch [20/20], Loss: 0.15853605
+train_loss_data [7.629254341125488, 6.632328033447266, 4.821183681488037, 3.250683069229126, 2.3627920150756836, 1.986749529838562, 1.2521350383758545, 2.091019630432129, 0.8340752124786377, 0.4009251296520233, 0.8867073655128479, 0.4306544363498688, 0.4588625431060791, 0.19940219819545746, 0.18718889355659485, 0.9076219797134399, 0.22453179955482483, 0.07043185830116272, 0.17072699964046478, 0.15853604674339294]
+Accuracy of the network on the 601 train images: 78.20299500831946 %
+metrics {'confusion_matrix': array([[339,  53],
+       [ 74, 131]], dtype=int64), 'accuracy_score': 0.7820299500831946, 'auc': 0.7820299500831946, 'average_precision_score': 0.5708403693355528, 'balanced_accuracy_score': 0.7470750890991766, 'f1_score': 0.7846410684474123, 'fbeta_score': 0.7862161257945802, 'matthews_corrcoef': 0.5098132670832283, 'precision_recall_curve': (array([0.34276206, 0.70212766, 0.25      , 0.        , 0.        ,
+       1.        ]), array([1.        , 0.6407767 , 0.00485437, 0.        , 0.        ,
+       0.        ]), array([  0,   1, 463, 898, 947], dtype=int64)), 'precision_score': 0.7872696817420436, 'recall_score': 0.7820299500831946, 'top_k_accuracy_score': 1.0}
